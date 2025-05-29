@@ -26,11 +26,18 @@ public class SecurityConfig {
                                       "/UserManagement/users",
                                       "/UserManagement/login").permitAll()
                         .pathMatchers(HttpMethod.POST, "/api/fares/**").hasRole("OWNER")
-                        .pathMatchers(HttpMethod.GET, "/api/fares/**").hasAnyRole("USER", "OWNER")//                        .pathMatchers(HttpMethod.POST, "/flights").hasRole("OWNER")
+                        .pathMatchers(HttpMethod.GET, "/api/fares/**").hasAnyRole("USER", "OWNER")//
+                        .pathMatchers(HttpMethod.PUT, "/api/fares/**").hasRole("OWNER")
+                        .pathMatchers(HttpMethod.DELETE, "/api/fares/**").hasRole("OWNER")//                        .pathMatchers(HttpMethod.POST, "/flights").hasRole("OWNER")
                         .pathMatchers(HttpMethod.POST, "/flights/**").hasRole("OWNER")
                         .pathMatchers(HttpMethod.GET, "/flights/**").hasAnyRole("USER", "OWNER")
+                        .pathMatchers(HttpMethod.PUT, "/flights/**").hasRole("OWNER")
+                        .pathMatchers(HttpMethod.DELETE, "/flights/**").hasRole("OWNER")
+
                         .pathMatchers("/bookings/**").hasRole("USER")
-		                .pathMatchers("/checkin/**").hasRole("USER")
+                        .pathMatchers(HttpMethod.GET, "/bookings/all").hasAnyRole("USER","OWNER")
+
+                        .pathMatchers("/checkin/**").hasRole("USER")
                        
                         .anyExchange().denyAll())
                 .addFilterAt(jwtAuthenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION)
